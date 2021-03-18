@@ -1,0 +1,7 @@
+<img class="card-img-top" src="{{curso.picture}}" alt="{{curso.title}}">
+<div class="card-body">
+    <h5 class="card-title">{{curso.title}}</h5>
+    <p class="card-text">{{curso.desc}}</p>
+    <p class="card-text">Precio: {{curso.price}}€</p>
+    <button type="button" class="btn btn-primary" [disabled]="isDisabled()" (click)="matricularse()">{{matricula}}</button>
+</div>
