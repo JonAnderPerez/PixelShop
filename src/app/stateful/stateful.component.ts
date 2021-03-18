@@ -33,13 +33,10 @@ export class StatefulComponent implements OnInit, OnDestroy {
       (respuesta: Response) => {this.shopModel.shopItems = respuesta;},
       (respuesta: Response) => {this.errorHttp = true;}
     );
-
-    this.onGlobalKeyboard();
   }
 
   ngOnDestroy(): void {
     this.shopSubscription.unsubscribe();
-    document.removeEventListener('keypress', this.onKeyboard);
   }
 
   clickItem(curso) {
@@ -49,7 +46,6 @@ export class StatefulComponent implements OnInit, OnDestroy {
   cursoMatriculado(_event: Product) {
     this.clickItem(_event);
     this.confirmChild.isDisabled = false;
-    this.onConfirm();
   }
 
   finalPrice() {
@@ -58,22 +54,6 @@ export class StatefulComponent implements OnInit, OnDestroy {
       precioFinal += item.price;
     });
     return precioFinal;
-  }
-
-  onConfirm() {
-    alert('Has añadido un nuevo curso');
-  }
-
-  onKeyboard(_event: KeyboardEvent) {
-    if(_event.key === 'Enter') {
-      alert(`Has presionado la tecla ${_event.key}`);
-    }
-  }
-
-  onGlobalKeyboard() {
-    document.addEventListener('keypress', (eventoGlobal) => {
-      this.onKeyboard(eventoGlobal);
-    });
   }
 
 }
