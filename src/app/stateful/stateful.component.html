@@ -19,4 +19,6 @@
         <li class="list-group-item disabled"><h2>Total: {{finalPrice() | currency:"&euro;"}}</h2></li>
     </ul>
     <app-confirm [boughtItems]="boughtItems" [finalPrice]="finalPrice()"></app-confirm>
+    <app-status-cart [price]="finalPrice()" [shopModel]="shopModel.shopItems" (add)="onConfirm()"></app-status-cart>
+    <input type="text" (keydown)="onKeyboard($event)">
 </main>

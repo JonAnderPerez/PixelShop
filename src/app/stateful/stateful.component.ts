@@ -3,9 +3,9 @@ import { ConfirmComponent } from '../confirm/confirm.component';
 import { HttpClient, HttpResponse } from '@angular/common/http';
 import { Subscription } from 'rxjs';
 
-import { Product } from '../interface/product'
+import { Product } from '../interface/product';
 
-import { Shop } from '../models/shop.model'
+import { Shop } from '../models/shop.model';
 
 
 @Component({
@@ -33,10 +33,13 @@ export class StatefulComponent implements OnInit, OnDestroy {
       (respuesta: Response) => {this.shopModel.shopItems = respuesta;},
       (respuesta: Response) => {this.errorHttp = true;}
     );
+
+    this.onGlobalKeyboard();
   }
 
   ngOnDestroy(): void {
     this.shopSubscription.unsubscribe();
+    document.removeEventListener('keypress', this.onKeyboard);
   }
 
   clickItem(curso) {
@@ -46,9 +49,9 @@ export class StatefulComponent implements OnInit, OnDestroy {
   cursoMatriculado(_event: Product) {
     this.clickItem(_event);
     this.confirmChild.isDisabled = false;
+    this.onConfirm();
   }
 
-  /* Mi solucion */
   finalPrice() {
     let precioFinal = 0;
     this.boughtItems.forEach((item) => {
@@ -57,13 +60,20 @@ export class StatefulComponent implements OnInit, OnDestroy {
     return precioFinal;
   }
 
-  /* Su solucion 
-  finalPrice() {
-    if(this.boughtItems) {
-      return this.boughtItems.reduce(
-        (prev: number, item: Product) => prev + item.price, 0
-      );
+  onConfirm() {
+    alert('Has añadido un nuevo curso');
+  }
+
+  onKeyboard(_event: KeyboardEvent) {
+    if(_event.key === 'Enter') {
+      alert(`Has presionado la tecla ${_event.key}`);
     }
-  }*/
+  }
+
+  onGlobalKeyboard() {
+    document.addEventListener('keypress', (eventoGlobal) => {
+      this.onKeyboard(eventoGlobal);
+    });
+  }
 
 }
